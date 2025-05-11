@@ -3,6 +3,7 @@ package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.response;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Getter;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.ErrorCode;
+import org.springframework.http.HttpStatusCode;
 
 import java.time.LocalDateTime;
 
@@ -27,5 +28,11 @@ public class BaseErrorResponse {
         this.success = false;
         this.timestamp = LocalDateTime.now();
     }
-    
+
+    public BaseErrorResponse(ErrorCode errorCode, HttpStatusCode httpStatusCode) {
+        this.code = httpStatusCode.value();
+        this.message = errorCode.getMessage();
+        this.success = false;
+        this.timestamp = LocalDateTime.now();
+    }
 }
