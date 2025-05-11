@@ -1,5 +1,6 @@
 package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.config.swagger;
 
+import lombok.Getter;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.ErrorCode;
 
 import java.util.LinkedHashSet;
@@ -7,6 +8,7 @@ import java.util.Set;
 
 import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.ErrorCode.*;
 
+@Getter
 public enum SwaggerResponseDescription {
     ;
     private final Set<ErrorCode> errorCodeList;
