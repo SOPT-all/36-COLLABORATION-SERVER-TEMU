@@ -41,7 +41,7 @@ spring:
     activate:
       on-profile: local-port
 server:
-  port: 8000
+  port: 8081
 
 ---
 # ??? DB
