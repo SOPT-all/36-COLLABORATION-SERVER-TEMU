@@ -1,4 +1,4 @@
-package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.config;
+package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.config.swagger;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
