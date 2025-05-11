@@ -12,6 +12,7 @@ public record ProductDetailResponse(
         @Schema(description = "제품 이미지들") List<String> productImages,
         @Schema(description = "제품 색상 리스트") List<String> productColors,
         @Schema(description = "제품 상세 이미지") List<String> productDetails,
-        @Schema(description = "리뷰 수", example = "21") int reviewCount
+        @Schema(description = "리뷰 수", example = "21") int reviewCount,
+        @Schema(description = "제품 ID", example = "1") Long productId
         ) {
 }

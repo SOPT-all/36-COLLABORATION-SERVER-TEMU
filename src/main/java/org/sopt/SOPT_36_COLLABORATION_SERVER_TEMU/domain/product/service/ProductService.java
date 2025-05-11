@@ -28,11 +28,12 @@ public class ProductService {
                 product.getCompany(),
                 product.getProductName(),
                 product.getDiscountRate(),
-                product.getOriginalPrice() * (product.getDiscountRate() / 100),
+                (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)),  // 할인된 금액
                 productImageRepository.findAllImagesByProductId(productId),
                 productColorRepository.findAllColorsByProductId(productId),
                 productDetailRepository.findAllProductDetailsByProductId(productId),
-                productReviewRepository.getReviewCountByProductId(productId)
+                productReviewRepository.getReviewCountByProductId(productId),
+                productId
         );
     }
 }
