@@ -1,6 +1,6 @@
-package domain.product.model;
+package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model;
 
-import domain.user.model.User;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;

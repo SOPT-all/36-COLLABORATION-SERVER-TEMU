@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableJpaAuditing
-@EntityScan("domain")
 public class Sopt36CollaborationServerTemuApplication {
 
 	public static void main(String[] args) {

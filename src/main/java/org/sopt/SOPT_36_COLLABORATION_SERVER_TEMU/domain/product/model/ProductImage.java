@@ -1,4 +1,4 @@
-package domain.product.model;
+package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,9 +8,9 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Setter
-public class ProductDetail {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "productDetailId")
+public class ProductImage {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
