@@ -1,6 +1,6 @@
-package domain.user.model;
+package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.user.model;
 
-import domain.product.model.ProductReview;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.ProductReview;
 import jakarta.persistence.*;
 import lombok.*;
 

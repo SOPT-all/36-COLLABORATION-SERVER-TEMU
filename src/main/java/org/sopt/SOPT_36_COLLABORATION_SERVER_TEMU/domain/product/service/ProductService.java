@@ -1,6 +1,6 @@
-package domain.product.service;
+package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.service;
 
-import domain.product.repository.ProductRepository;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
