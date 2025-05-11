@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  app:
+    image: dlwjddus1112/sopt-temu
+    container_name: sopt-temu-container
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      PROD_DATASOURCE_URL: "${PROD_DATASOURCE_URL}"
+      PROD_DATASOURCE_USERNAME: "${PROD_DATASOURCE_USERNAME}"
+      PROD_DATASOURCE_PASSWORD: "${PROD_DATASOURCE_PASSWORD}"
+    restart: always
