@@ -29,6 +29,25 @@ public class ProductService {
     private final ProductDetailRepository productDetailRepository;
     private final ProductReviewRepository productReviewRepository;
 
+    public MainResponse getAllProduct(){
+        List<Product> products = productRepository.findAll();
+        List<ProductMainInfo> productMainInfos = new ArrayList<>();
+        for(Product product : products){
+            Long productId = product.getId();
+            productMainInfos.add(new ProductMainInfo(
+                    productId,
+                    product.getProductName(),
+                    product.getDiscountRate(),
+                    (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)),
+                    productImageRepository.findTopByProduct_IdOrderByIdAsc(productId).getImageUrl(),
+                    productReviewRepository.countByProduct_Id(productId),
+                    product.getTag()
+                    ));
+        }
+        Collections.shuffle(productMainInfos);
+        return new MainResponse(productMainInfos);
+    }
+
     public PromotionResponse getPromotion(){
         final int discountRate = 50;
         List<Product> promotionProducts = productRepository.findByDiscountRateGreaterThan(discountRate);
