@@ -2,6 +2,7 @@ package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.enums.ProductTag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,9 @@ public class Product {
 
     private int discountRate;
 
-    private String tag;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
+    private ProductTag tag;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 255)

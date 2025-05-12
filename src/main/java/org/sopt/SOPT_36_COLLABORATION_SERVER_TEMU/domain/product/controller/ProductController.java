@@ -2,6 +2,7 @@ package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.MainResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.ProductDetailResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.ProductReviewResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.PromotionResponse;
@@ -28,6 +29,12 @@ public class ProductController {
     @GetMapping("/promotion")
     public BaseResponse<PromotionResponse> getPromotion(){
         return BaseResponse.ok(productService.getPromotion());
+    }
+    @Tag(name="메인페이지 조회 관련 API")
+    @Operation(summary = "메인페이지 조회", description = "메인페이지의 정보들을 조회합니다.")
+    @GetMapping
+    public BaseResponse<MainResponse> getMain() {
+        return BaseResponse.ok(productService.getAllProduct());
     }
 
     @CustomExceptionDescription(PRODUCT_DETAIL)
