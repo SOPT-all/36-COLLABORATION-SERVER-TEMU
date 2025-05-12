@@ -3,6 +3,7 @@ package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.Product;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.ProductReview;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.repository.*;
