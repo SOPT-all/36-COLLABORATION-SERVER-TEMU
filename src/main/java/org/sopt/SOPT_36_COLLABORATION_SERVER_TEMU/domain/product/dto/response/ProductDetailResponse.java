@@ -8,6 +8,7 @@ public record ProductDetailResponse(
         @Schema(description = "회사명", example = "스마일마켓") String company,
         @Schema(description = "제품명", example = "무조립 접이식, 어쩌구 저쩌구,.,,") String productName,
         @Schema(description = "할인율", example = "50") int discountRate,
+        @Schema(description = "원가", example = "19800") int originalPrice,
         @Schema(description = "할인가", example = "9900") int discountPrice,
         @Schema(description = "제품 이미지들") List<String> productImages,
         @Schema(description = "제품 색상 리스트") List<String> productColors,

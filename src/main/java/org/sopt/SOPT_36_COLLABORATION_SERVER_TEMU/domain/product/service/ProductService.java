@@ -38,6 +38,7 @@ public class ProductService {
                 product.getCompany(),
                 product.getProductName(),
                 product.getDiscountRate(),
+                product.getOriginalPrice(),
                 (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)),  // 할인된 금액
                 productImageRepository.findAllImagesByProductId(productId),
                 productColorRepository.findAllColorsByProductId(productId),
