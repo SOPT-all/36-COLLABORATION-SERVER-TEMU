@@ -24,18 +24,6 @@ public class ProductService {
     private final ProductDetailRepository productDetailRepository;
     private final ProductReviewRepository productReviewRepository;
 
-    public PromotionResponse getPromotion(){
-        final int discountRate = 50;
-        List<Product> promotionProducts = productRepository.findByDiscountRateGreaterThan(discountRate);
-        List<PromotionProductInfo> responsePromotionProducts = new ArrayList<>();
-        for (Product product : promotionProducts) {
-            responsePromotionProducts.add(new PromotionProductInfo(
-                product.getId(), product.getProductName(), product.getDiscountRate(), (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)), productImageRepository.findFirstByProduct_Id(product.getId()).getImageUrl()
-            ));
-        }
-        return new PromotionResponse(responsePromotionProducts);
-    }
-
     public MainResponse getAllProduct(){
         List<Product> products = productRepository.findAll();
         List<ProductMainInfo> productMainInfos = new ArrayList<>();
@@ -53,6 +41,17 @@ public class ProductService {
         }
         Collections.shuffle(productMainInfos);
         return new MainResponse(productMainInfos);
+    }
+    public PromotionResponse getPromotion(){
+        final int discountRate = 50;
+        List<Product> promotionProducts = productRepository.findByDiscountRateGreaterThan(discountRate);
+        List<PromotionProductInfo> responsePromotionProducts = new ArrayList<>();
+        for (Product product : promotionProducts) {
+            responsePromotionProducts.add(new PromotionProductInfo(
+                product.getId(), product.getProductName(), product.getDiscountRate(), (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)), productImageRepository.findFirstByProduct_Id(product.getId()).getImageUrl()
+            ));
+        }
+        return new PromotionResponse(responsePromotionProducts);
     }
 
     public ProductDetailResponse getProductDetail(Long productId) {

@@ -25,16 +25,15 @@ public class ProductController {
     private final ProductService productService;
 
     @Tag(name="메인페이지 조회 관련 API")
-    @Operation(summary = "특가 상품 조회", description = "특가 상품 5개를 조회합니다.")
-    @GetMapping("/promotion")
-    public BaseResponse<PromotionResponse> getPromotion(){
-        return BaseResponse.ok(productService.getPromotion());
-    }
-    @Tag(name="메인페이지 조회 관련 API")
     @Operation(summary = "메인페이지 조회", description = "메인페이지의 정보들을 조회합니다.")
     @GetMapping
     public BaseResponse<MainResponse> getMain() {
         return BaseResponse.ok(productService.getAllProduct());
+    }
+    @Operation(summary = "특가 상품 조회", description = "특가 상품 5개를 조회합니다.")
+    @GetMapping("/promotion")
+    public BaseResponse<PromotionResponse> getPromotion(){
+        return BaseResponse.ok(productService.getPromotion());
     }
 
     @CustomExceptionDescription(PRODUCT_DETAIL)
