@@ -14,6 +14,10 @@ public enum ErrorCode {
     UNAUTHORIZED(103,HttpStatus.UNAUTHORIZED.value(),"인증 자격이 없습니다."),
     FORBIDDEN(104,HttpStatus.FORBIDDEN.value(), "권한이 없습니다."),
     INTERNAL_SERVER_ERROR(105, HttpStatus.INTERNAL_SERVER_ERROR.value(), "서버 내부 오류입니다."),
+
+
+    //product
+    PRODUCT_NOT_FOUND(200, NOT_FOUND.value(), "존재하지 않는 상품입니다.")
     ;
 
     private final int code;
