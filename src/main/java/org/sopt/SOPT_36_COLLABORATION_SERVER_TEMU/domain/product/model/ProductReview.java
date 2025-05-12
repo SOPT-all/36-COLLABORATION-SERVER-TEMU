@@ -29,11 +29,14 @@ public class ProductReview {
     private String content;
 
     @Column(nullable = false)
-    private double score;
+    private int score;
 
     @CreatedDate
     @Column(nullable = false)
     private String createdAt;
 
     private String imageUrl;
+
+    @Column(nullable = false)
+    private String purchaseOption;
 }

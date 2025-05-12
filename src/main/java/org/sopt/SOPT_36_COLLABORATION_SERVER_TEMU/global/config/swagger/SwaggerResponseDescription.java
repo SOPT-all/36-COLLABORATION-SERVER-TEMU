@@ -12,6 +12,9 @@ import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.ErrorC
 public enum SwaggerResponseDescription {
     PRODUCT_DETAIL(new LinkedHashSet<>(Set.of(
             PRODUCT_NOT_FOUND
+    ))),
+    PRODUCT_REVIEW(new LinkedHashSet<>(Set.of(
+            PRODUCT_NOT_FOUND
     )))
     ;
     private final Set<ErrorCode> errorCodeList;
