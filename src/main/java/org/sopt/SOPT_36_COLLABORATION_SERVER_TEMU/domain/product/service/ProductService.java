@@ -35,7 +35,7 @@ public class ProductService {
         List<PromotionProductInfo> responsePromotionProducts = new ArrayList<>();
         for (Product product : promotionProducts) {
             responsePromotionProducts.add(new PromotionProductInfo(
-                product.getId(), product.getProductName(), product.getDiscountRate(), (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)), productImageRepository.findFirstByProductId(product.getId()).getImageUrl()
+                product.getId(), product.getProductName(), product.getDiscountRate(), (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)), productImageRepository.findFirstByProduct_Id(product.getId()).getImageUrl()
             ));
         }
         return new PromotionResponse(responsePromotionProducts);
