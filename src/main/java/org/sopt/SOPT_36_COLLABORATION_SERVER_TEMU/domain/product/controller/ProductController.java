@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.ProductDetailResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.ProductReviewResponse;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.PromotionResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.annotation.CustomExceptionDescription;
@@ -22,6 +23,12 @@ import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.config.swagger.S
 public class ProductController {
     private final ProductService productService;
 
+    @Tag(name="특가상품 조회 API")
+    @Operation(summary = "특가 상품 조회", description = "특가 상품 5개를 조회합니다.")
+    @GetMapping("/promotion")
+    public BaseResponse<PromotionResponse> getPromotion(){
+        return BaseResponse.ok(productService.getPromotion());
+    }
 
     @CustomExceptionDescription(PRODUCT_DETAIL)
     @Tag(name = "상품 상세 조회 관련 API")
