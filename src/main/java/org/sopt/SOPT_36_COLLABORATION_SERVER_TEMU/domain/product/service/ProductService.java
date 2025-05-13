@@ -46,7 +46,7 @@ public class ProductService {
                     product.getProductName(),
                     product.getDiscountRate(),
                     (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)),
-                    productImageRepository.findTopByProduct_IdOrderByIdAsc(productId).getImageUrl(),
+                    productImageRepository.findFirstByProduct_Id(productId).getImageUrl(),
                     productReviewRepository.countByProduct_Id(productId),
                     product.getTag()
                     ));
