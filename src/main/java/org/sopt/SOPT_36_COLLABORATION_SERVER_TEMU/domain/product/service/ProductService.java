@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.Product;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.ProductReview;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.repository.*;
@@ -27,6 +28,18 @@ public class ProductService {
     private final ProductColorRepository productColorRepository;
     private final ProductDetailRepository productDetailRepository;
     private final ProductReviewRepository productReviewRepository;
+
+    public PromotionResponse getPromotion(){
+        final int discountRate = 50;
+        List<Product> promotionProducts = productRepository.findByDiscountRateGreaterThan(discountRate);
+        List<PromotionProductInfo> responsePromotionProducts = new ArrayList<>();
+        for (Product product : promotionProducts) {
+            responsePromotionProducts.add(new PromotionProductInfo(
+                product.getId(), product.getProductName(), product.getDiscountRate(), (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)), productImageRepository.findFirstByProductId(product.getId()).getImageUrl()
+            ));
+        }
+        return new PromotionResponse(responsePromotionProducts);
+    }
 
     public MainResponse getAllProduct(){
         List<Product> products = productRepository.findAll();

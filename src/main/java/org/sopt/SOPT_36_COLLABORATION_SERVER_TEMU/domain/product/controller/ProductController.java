@@ -7,6 +7,7 @@ import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.Ma
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.MainResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.ProductDetailResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.ProductReviewResponse;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.PromotionResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.SearchResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.PromotionResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.service.ProductService;
@@ -41,6 +42,12 @@ public class ProductController {
     @GetMapping("/search")
     public BaseResponse<SearchResponse> getSearchedProduct(@RequestParam String keyword){
         return BaseResponse.ok(productService.getSearchedProduct(keyword));
+    }
+    @Tag(name="특가상품 조회 API")
+    @Operation(summary = "특가 상품 조회", description = "특가 상품 5개를 조회합니다.")
+    @GetMapping("/promotion")
+    public BaseResponse<PromotionResponse> getPromotion(){
+        return BaseResponse.ok(productService.getPromotion());
     }
 
     @CustomExceptionDescription(PRODUCT_DETAIL)
