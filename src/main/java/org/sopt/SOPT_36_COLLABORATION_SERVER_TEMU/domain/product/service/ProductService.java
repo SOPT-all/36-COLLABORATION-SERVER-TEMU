@@ -95,17 +95,6 @@ public class ProductService {
         return new MainResponse(prioritized);
     }
 
-    public PromotionResponse getPromotion(){
-        final int discountRate = 50;
-        List<Product> promotionProducts = productRepository.findByDiscountRateGreaterThan(discountRate);
-        List<PromotionProductInfo> responsePromotionProducts = new ArrayList<>();
-        for (Product product : promotionProducts) {
-            responsePromotionProducts.add(new PromotionProductInfo(
-                product.getId(), product.getProductName(), product.getDiscountRate(), (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)), productImageRepository.findFirstByProduct_Id(product.getId()).getImageUrl()
-            ));
-        }
-        return new PromotionResponse(responsePromotionProducts);
-    }
 
     public SearchResponse getSearchedProduct(String keyword){
         List<Product> searchedProducts = productRepository.findByProductNameContaining((keyword));
