@@ -23,7 +23,7 @@ import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.config.swagger.S
 public class ProductController {
     private final ProductService productService;
 
-    @Tag(name="특가상품 조회 API")
+    @Tag(name="메인페이지 조회 관련 API")
     @Operation(summary = "특가 상품 조회", description = "특가 상품 5개를 조회합니다.")
     @GetMapping("/promotion")
     public BaseResponse<PromotionResponse> getPromotion(){
