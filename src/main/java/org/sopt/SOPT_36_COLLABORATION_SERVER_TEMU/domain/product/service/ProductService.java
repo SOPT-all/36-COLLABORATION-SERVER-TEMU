@@ -2,6 +2,8 @@ package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.Product;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.ErrorCode.PRODUCT_NOT_FOUND;
 import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.constant.ProductErrorCode.PRODUCT_NOT_FOUND;
 
 @Service
@@ -70,6 +73,24 @@ public class ProductService {
             ));
         }
         return new PromotionResponse(responsePromotionProducts);
+    }
+
+    public SearchResponse getSearchedProduct(String keyword){
+        List<Product> searchedProducts = productRepository.getProductByProductNameContaining((keyword));
+        List<ProductMainInfo> productMainInfos = new ArrayList<>();
+        for(Product product : searchedProducts){
+            Long productId = product.getId();
+            productMainInfos.add(new ProductMainInfo(
+                    productId,
+                    product.getProductName(),
+                    product.getDiscountRate(),
+                    (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)),
+                    productImageRepository.findFirstByProduct_Id(productId).getImageUrl(),
+                    productReviewRepository.countByProduct_Id(productId),
+                    product.getTag()
+            ));
+        }
+        return new SearchResponse(productMainInfos);
     }
 
     public ProductDetailResponse getProductDetail(Long productId) {
