@@ -76,7 +76,7 @@ public class ProductService {
     }
 
     public SearchResponse getSearchedProduct(String keyword){
-        List<Product> searchedProducts = productRepository.getProductByProductNameContaining((keyword));
+        List<Product> searchedProducts = productRepository.findByProductNameContaining((keyword));
         List<ProductMainInfo> productMainInfos = new ArrayList<>();
         for(Product product : searchedProducts){
             Long productId = product.getId();
