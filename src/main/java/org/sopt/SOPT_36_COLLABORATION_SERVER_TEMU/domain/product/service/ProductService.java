@@ -1,9 +1,6 @@
 package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.service;
 
-import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.ProductDetailResponse;
-import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.ProductReviewDetail;
-import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.ProductReviewResponse;
-import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.ReviewScoreDistribution;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.Product;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.ProductReview;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.repository.*;
@@ -15,10 +12,7 @@ import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.ErrorCode;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.response.BaseResponse;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.ErrorCode.*;
 
@@ -31,6 +25,18 @@ public class ProductService {
     private final ProductColorRepository productColorRepository;
     private final ProductDetailRepository productDetailRepository;
     private final ProductReviewRepository productReviewRepository;
+
+    public PromotionResponse getPromotion(){
+        final int discountRate = 50;
+        List<Product> promotionProducts = productRepository.findByDiscountRateGreaterThan(discountRate);
+        List<PromotionProductInfo> responsePromotionProducts = new ArrayList<>();
+        for (Product product : promotionProducts) {
+            responsePromotionProducts.add(new PromotionProductInfo(
+                product.getId(), product.getProductName(), product.getDiscountRate(), (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)), productImageRepository.findFirstByProduct_Id(product.getId()).getImageUrl()
+            ));
+        }
+        return new PromotionResponse(responsePromotionProducts);
+    }
 
     public ProductDetailResponse getProductDetail(Long productId) {
         Product product = productRepository.findById(productId).orElseThrow(() -> new CustomException(PRODUCT_NOT_FOUND));
