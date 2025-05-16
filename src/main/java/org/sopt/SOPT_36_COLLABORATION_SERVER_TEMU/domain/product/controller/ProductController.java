@@ -2,21 +2,21 @@ package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.MainResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.ProductDetailResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.ProductReviewResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.PromotionResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.service.ProductService;
-import lombok.RequiredArgsConstructor;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.annotation.CustomExceptionDescription;
-import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.config.swagger.SwaggerResponseDescription;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.response.BaseResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.config.swagger.SwaggerResponseDescription.*;
+import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.config.swagger.SwaggerResponseDescription.PRODUCT_DETAIL;
+import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.config.swagger.SwaggerResponseDescription.PRODUCT_REVIEW;
 
 @RestController
 @RequestMapping("/products")

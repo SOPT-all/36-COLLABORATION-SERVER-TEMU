@@ -1,11 +1,11 @@
 package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.service;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.Product;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.ProductReview;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.repository.*;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.user.model.User;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.CustomException;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class ProductService {
     public MainResponse getAllProduct(){
         List<Product> products = productRepository.findAll();
         List<ProductMainInfo> productMainInfos = new ArrayList<>();
-        for (Product product : products) {
+        for(Product product : products){
             Long productId = product.getId();
             productMainInfos.add(new ProductMainInfo(
                     productId,
@@ -37,13 +37,13 @@ public class ProductService {
                     productImageRepository.findFirstByProduct_Id(productId).getImageUrl(),
                     productReviewRepository.countByProduct_Id(productId),
                     product.getTag()
-            ));
+                    ));
         }
         Collections.shuffle(productMainInfos);
         return new MainResponse(productMainInfos);
     }
 
-    public PromotionResponse getPromotion() {
+    public PromotionResponse getPromotion(){
         final int discountRate = 50;
         List<Product> promotionProducts = productRepository.findByDiscountRateGreaterThan(discountRate);
         List<PromotionProductInfo> responsePromotionProducts = new ArrayList<>();
