@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Builder
 @AllArgsConstructor
 public class Product {
     @Id
@@ -24,6 +25,10 @@ public class Product {
     private int discountRate;
 
     private String tag;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 255)
+    private Category category;
 
     @Column(nullable = false)
     private String company;
