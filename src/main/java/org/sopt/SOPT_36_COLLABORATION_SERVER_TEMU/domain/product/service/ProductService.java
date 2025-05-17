@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.Category;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.Product;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.ProductReview;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.repository.*;
@@ -40,12 +41,14 @@ public class ProductService {
                     (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)),
                     productImageRepository.findFirstByProduct_Id(productId).getImageUrl(),
                     productReviewRepository.countByProduct_Id(productId),
-                    product.getTag(),
-                    product.getCategory().getCategoryName()
+                    product.getTag()
                     ));
         }
         Collections.shuffle(productMainInfos);
-        return new MainResponse(productMainInfos);
+        List<String> categoryNames = Arrays.stream(Category.values())
+                .map(Category::getCategoryName)
+                .toList();
+        return new MainResponse(categoryNames, productMainInfos);
     }
 
     public PromotionResponse getPromotion(){
@@ -73,8 +76,7 @@ public class ProductService {
                     (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)),
                     productImageRepository.findFirstByProduct_Id(productId).getImageUrl(),
                     productReviewRepository.countByProduct_Id(productId),
-                    product.getTag(),
-                    product.getCategory().getCategoryName()
+                    product.getTag()
             ));
         }
         return new SearchResponse(productMainInfos);

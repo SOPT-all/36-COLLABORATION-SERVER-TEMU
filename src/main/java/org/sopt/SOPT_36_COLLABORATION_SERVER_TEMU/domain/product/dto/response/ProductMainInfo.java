@@ -12,7 +12,6 @@ public record ProductMainInfo(
         @Schema(description = "할인가", example = "9900") int discountPrice,
         @Schema(description = "제품 이미지") String productImage,
         @Schema(description = "리뷰 수", example = "21") int reviewCount,
-        @Schema(description = "제품 태그", example = "재구매 고객이 많은 스토어", allowableValues = {"HIGH_REPURCHASE", "LOW_RETURN", "ESTABLISHED_YEAR_AGO", "NONE"}) ProductTag productTag,
-        @Schema(description = "제품 카테고리", example = "RECOMMEND") String category
+        @Schema(description = "제품 태그", example = "재구매 고객이 많은 스토어", allowableValues = {"HIGH_REPURCHASE", "LOW_RETURN", "ESTABLISHED_YEAR_AGO", "NONE"}) ProductTag productTag
         ) {
 }
