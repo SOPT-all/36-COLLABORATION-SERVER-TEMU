@@ -30,6 +30,7 @@ public class ProductController {
     public BaseResponse<MainResponse> getMain() {
         return BaseResponse.ok(productService.getAllProduct());
     }
+
     @Operation(summary = "특가 상품 조회", description = "특가 상품 5개를 조회합니다.")
     @GetMapping("/promotion")
     public BaseResponse<PromotionResponse> getPromotion(){

@@ -27,7 +27,7 @@ public class ProductService {
     public MainResponse getAllProduct(){
         List<Product> products = productRepository.findAll();
         List<ProductMainInfo> productMainInfos = new ArrayList<>();
-        for(Product product : products){
+        for (Product product : products) {
             Long productId = product.getId();
             productMainInfos.add(new ProductMainInfo(
                     productId,
@@ -37,12 +37,13 @@ public class ProductService {
                     productImageRepository.findFirstByProduct_Id(productId).getImageUrl(),
                     productReviewRepository.countByProduct_Id(productId),
                     product.getTag()
-                    ));
+            ));
         }
         Collections.shuffle(productMainInfos);
         return new MainResponse(productMainInfos);
     }
-    public PromotionResponse getPromotion(){
+
+    public PromotionResponse getPromotion() {
         final int discountRate = 50;
         List<Product> promotionProducts = productRepository.findByDiscountRateGreaterThan(discountRate);
         List<PromotionProductInfo> responsePromotionProducts = new ArrayList<>();
