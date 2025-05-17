@@ -2,7 +2,12 @@ package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.Category;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.Product;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.ProductReview;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.repository.*;
@@ -26,37 +31,24 @@ public class ProductService {
 
     public MainResponse getAllProduct(){
         List<Product> products = productRepository.findAll();
-
-        List<ProductMainInfo> prioritized = new ArrayList<>();
-        List<ProductMainInfo> others = new ArrayList<>();
-
-        for (Product product : products) {
+        List<ProductMainInfo> productMainInfos = new ArrayList<>();
+        for(Product product : products){
             Long productId = product.getId();
-            int imageCount = product.getProductImages().size();
-
-            ProductMainInfo info = new ProductMainInfo(
+            productMainInfos.add(new ProductMainInfo(
                     productId,
                     product.getProductName(),
                     product.getDiscountRate(),
                     (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)),
                     productImageRepository.findFirstByProduct_Id(productId).getImageUrl(),
                     productReviewRepository.countByProduct_Id(productId),
-                    product.getTag(),
-                    product.getCategory().getCategoryName()
-            );
-
-            if (imageCount >= 3) {
-                prioritized.add(info);
-            } else {
-                others.add(info);
-            }
+                    product.getTag()
+                    ));
         }
-
-        Collections.shuffle(others);
-
-        prioritized.addAll(others);
-
-        return new MainResponse(prioritized);
+        Collections.shuffle(productMainInfos);
+        List<String> categoryNames = Arrays.stream(Category.values())
+                .map(Category::getCategoryName)
+                .toList();
+        return new MainResponse(categoryNames, productMainInfos);
     }
 
     public PromotionResponse getPromotion(){
@@ -69,6 +61,25 @@ public class ProductService {
             ));
         }
         return new PromotionResponse(responsePromotionProducts);
+    }
+
+
+    public SearchResponse getSearchedProduct(String keyword){
+        List<Product> searchedProducts = productRepository.findByProductNameContaining((keyword));
+        List<ProductMainInfo> productMainInfos = new ArrayList<>();
+        for(Product product : searchedProducts){
+            Long productId = product.getId();
+            productMainInfos.add(new ProductMainInfo(
+                    productId,
+                    product.getProductName(),
+                    product.getDiscountRate(),
+                    (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)),
+                    productImageRepository.findFirstByProduct_Id(productId).getImageUrl(),
+                    productReviewRepository.countByProduct_Id(productId),
+                    product.getTag()
+            ));
+        }
+        return new SearchResponse(productMainInfos);
     }
 
     public ProductDetailResponse getProductDetail(Long productId) {
