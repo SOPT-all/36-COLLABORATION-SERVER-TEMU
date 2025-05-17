@@ -41,7 +41,8 @@ public class ProductService {
                     (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)),
                     productImageRepository.findFirstByProduct_Id(productId).getImageUrl(),
                     productReviewRepository.countByProduct_Id(productId),
-                    product.getTag()
+                    product.getTag(),
+                    product.getCategory().getCategoryName()
             );
 
             if (imageCount >= 3) {
