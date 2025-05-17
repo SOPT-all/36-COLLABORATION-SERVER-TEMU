@@ -95,6 +95,7 @@ public class ProductService {
         for (ProductReview review : reviews) {
             User user = productReviewRepository.findUserByProductIdAndReviewId(productId, review.getId());
             productReviewDetails.add(new ProductReviewDetail(
+                    review.getId(),
                     user.getNickname(),
                     review.getScore(),
                     review.getImageUrl(),
