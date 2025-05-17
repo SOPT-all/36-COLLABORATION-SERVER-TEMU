@@ -26,10 +26,15 @@ public class ProductService {
 
     public MainResponse getAllProduct(){
         List<Product> products = productRepository.findAll();
-        List<ProductMainInfo> productMainInfos = new ArrayList<>();
-        for(Product product : products){
+
+        List<ProductMainInfo> prioritized = new ArrayList<>();
+        List<ProductMainInfo> others = new ArrayList<>();
+
+        for (Product product : products) {
             Long productId = product.getId();
-            productMainInfos.add(new ProductMainInfo(
+            int imageCount = product.getProductImages().size();
+
+            ProductMainInfo info = new ProductMainInfo(
                     productId,
                     product.getProductName(),
                     product.getDiscountRate(),
@@ -37,10 +42,20 @@ public class ProductService {
                     productImageRepository.findFirstByProduct_Id(productId).getImageUrl(),
                     productReviewRepository.countByProduct_Id(productId),
                     product.getTag()
-                    ));
+            );
+
+            if (imageCount >= 3) {
+                prioritized.add(info);
+            } else {
+                others.add(info);
+            }
         }
-        Collections.shuffle(productMainInfos);
-        return new MainResponse(productMainInfos);
+
+        Collections.shuffle(others);
+
+        prioritized.addAll(others);
+
+        return new MainResponse(prioritized);
     }
 
     public PromotionResponse getPromotion(){
