@@ -1,6 +1,7 @@
 package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception;
 
 import lombok.Getter;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.constant.ErrorCode;
 
 @Getter
 public class CustomException extends RuntimeException {

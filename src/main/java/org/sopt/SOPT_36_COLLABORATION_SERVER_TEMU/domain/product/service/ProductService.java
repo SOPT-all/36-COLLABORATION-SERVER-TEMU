@@ -8,13 +8,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.user.model.User;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.CustomException;
-import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.ErrorCode;
-import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.response.BaseResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.ErrorCode.*;
+import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.constant.ProductErrorCode.PRODUCT_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
