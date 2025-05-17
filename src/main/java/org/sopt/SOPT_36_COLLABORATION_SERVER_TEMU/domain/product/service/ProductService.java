@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.ErrorCode.PRODUCT_NOT_FOUND;
 import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.constant.ProductErrorCode.PRODUCT_NOT_FOUND;
 
 @Service
@@ -41,7 +40,8 @@ public class ProductService {
                     (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)),
                     productImageRepository.findFirstByProduct_Id(productId).getImageUrl(),
                     productReviewRepository.countByProduct_Id(productId),
-                    product.getTag()
+                    product.getTag(),
+                    product.getCategory().getCategoryName()
                     ));
         }
         Collections.shuffle(productMainInfos);
@@ -60,41 +60,6 @@ public class ProductService {
         return new PromotionResponse(responsePromotionProducts);
     }
 
-    public MainResponse getAllProduct(){
-        List<Product> products = productRepository.findAll();
-
-        List<ProductMainInfo> prioritized = new ArrayList<>();
-        List<ProductMainInfo> others = new ArrayList<>();
-
-        for (Product product : products) {
-            Long productId = product.getId();
-            int imageCount = product.getProductImages().size();
-
-            ProductMainInfo info = new ProductMainInfo(
-                    productId,
-                    product.getProductName(),
-                    product.getDiscountRate(),
-                    (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)),
-                    productImageRepository.findFirstByProduct_Id(productId).getImageUrl(),
-                    productReviewRepository.countByProduct_Id(productId),
-                    product.getTag(),
-                    product.getCategory().getCategoryName()
-            );
-
-            if (imageCount >= 3) {
-                prioritized.add(info);
-            } else {
-                others.add(info);
-            }
-        }
-
-        Collections.shuffle(others);
-
-        prioritized.addAll(others);
-
-        return new MainResponse(prioritized);
-    }
-
 
     public SearchResponse getSearchedProduct(String keyword){
         List<Product> searchedProducts = productRepository.findByProductNameContaining((keyword));
@@ -108,7 +73,8 @@ public class ProductService {
                     (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)),
                     productImageRepository.findFirstByProduct_Id(productId).getImageUrl(),
                     productReviewRepository.countByProduct_Id(productId),
-                    product.getTag()
+                    product.getTag(),
+                    product.getCategory().getCategoryName()
             ));
         }
         return new SearchResponse(productMainInfos);

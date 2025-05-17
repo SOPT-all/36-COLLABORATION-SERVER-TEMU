@@ -32,6 +32,7 @@ public class ProductController {
         return BaseResponse.ok(productService.getAllProduct());
     }
 
+    @Tag(name="메인페이지 조회 관련 API")
     @Operation(summary = "특가 상품 조회", description = "특가 상품 5개를 조회합니다.")
     @GetMapping("/promotion")
     public BaseResponse<PromotionResponse> getPromotion(){
@@ -43,13 +44,6 @@ public class ProductController {
     @GetMapping("/search")
     public BaseResponse<SearchResponse> getSearchedProduct(@RequestParam String keyword){
         return BaseResponse.ok(productService.getSearchedProduct(keyword));
-    }
-
-    @Tag(name="메인페이지 조회 관련 API")
-    @Operation(summary = "특가 상품 조회", description = "특가 상품 5개를 조회합니다.")
-    @GetMapping("/promotion")
-    public BaseResponse<PromotionResponse> getPromotion(){
-        return BaseResponse.ok(productService.getPromotion());
     }
 
     @CustomExceptionDescription(PRODUCT_DETAIL)
