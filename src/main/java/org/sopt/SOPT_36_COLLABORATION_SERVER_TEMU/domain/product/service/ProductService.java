@@ -1,11 +1,11 @@
 package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.service;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.Product;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.ProductReview;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.repository.*;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.user.model.User;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.CustomException;
 import org.springframework.stereotype.Service;
@@ -23,6 +23,41 @@ public class ProductService {
     private final ProductColorRepository productColorRepository;
     private final ProductDetailRepository productDetailRepository;
     private final ProductReviewRepository productReviewRepository;
+
+    public MainResponse getAllProduct(){
+        List<Product> products = productRepository.findAll();
+
+        List<ProductMainInfo> prioritized = new ArrayList<>();
+        List<ProductMainInfo> others = new ArrayList<>();
+
+        for (Product product : products) {
+            Long productId = product.getId();
+            int imageCount = product.getProductImages().size();
+
+            ProductMainInfo info = new ProductMainInfo(
+                    productId,
+                    product.getProductName(),
+                    product.getDiscountRate(),
+                    (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)),
+                    productImageRepository.findFirstByProduct_Id(productId).getImageUrl(),
+                    productReviewRepository.countByProduct_Id(productId),
+                    product.getTag(),
+                    product.getCategory().getCategoryName()
+            );
+
+            if (imageCount >= 3) {
+                prioritized.add(info);
+            } else {
+                others.add(info);
+            }
+        }
+
+        Collections.shuffle(others);
+
+        prioritized.addAll(others);
+
+        return new MainResponse(prioritized);
+    }
 
     public PromotionResponse getPromotion(){
         final int discountRate = 50;
@@ -60,6 +95,7 @@ public class ProductService {
         for (ProductReview review : reviews) {
             User user = productReviewRepository.findUserByProductIdAndReviewId(productId, review.getId());
             productReviewDetails.add(new ProductReviewDetail(
+                    review.getId(),
                     user.getNickname(),
                     review.getScore(),
                     review.getImageUrl(),

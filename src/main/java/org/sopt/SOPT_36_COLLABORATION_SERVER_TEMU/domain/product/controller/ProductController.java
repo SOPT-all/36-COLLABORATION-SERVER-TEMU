@@ -2,20 +2,21 @@ package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.MainResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.ProductDetailResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.ProductReviewResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.PromotionResponse;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.service.ProductService;
-import lombok.RequiredArgsConstructor;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.annotation.CustomExceptionDescription;
-import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.config.swagger.SwaggerResponseDescription;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.response.BaseResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.config.swagger.SwaggerResponseDescription.*;
+import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.config.swagger.SwaggerResponseDescription.PRODUCT_DETAIL;
+import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.config.swagger.SwaggerResponseDescription.PRODUCT_REVIEW;
 
 @RestController
 @RequestMapping("/products")
@@ -24,6 +25,12 @@ public class ProductController {
     private final ProductService productService;
 
     @Tag(name="메인페이지 조회 관련 API")
+    @Operation(summary = "메인페이지 조회", description = "메인페이지의 정보들을 조회합니다.")
+    @GetMapping
+    public BaseResponse<MainResponse> getMain() {
+        return BaseResponse.ok(productService.getAllProduct());
+    }
+
     @Operation(summary = "특가 상품 조회", description = "특가 상품 5개를 조회합니다.")
     @GetMapping("/promotion")
     public BaseResponse<PromotionResponse> getPromotion(){
