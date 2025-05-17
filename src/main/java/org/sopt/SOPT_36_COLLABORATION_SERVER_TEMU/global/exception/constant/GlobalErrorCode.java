@@ -1,7 +1,9 @@
 package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.constant;
 
+import io.swagger.v3.oas.models.examples.Example;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.response.BaseErrorResponse;
 import org.springframework.http.HttpStatus;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -15,8 +17,8 @@ public enum GlobalErrorCode implements ErrorCode {
     UNAUTHORIZED(103,HttpStatus.UNAUTHORIZED.value(),"인증 자격이 없습니다."),
     FORBIDDEN(104,HttpStatus.FORBIDDEN.value(), "권한이 없습니다."),
     INTERNAL_SERVER_ERROR(105, HttpStatus.INTERNAL_SERVER_ERROR.value(), "서버 내부 오류입니다.");
-
     private final int code;
     private final int httpStatus;
     private final String message;
+
 }

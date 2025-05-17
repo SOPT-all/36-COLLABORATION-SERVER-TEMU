@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static java.util.stream.Collectors.groupingBy;
+import static org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.constant.GlobalErrorCode.*;
 
 @OpenAPIDefinition(
         info = @Info(
@@ -48,6 +49,9 @@ public class SwaggerConfig {
             // CustomExceptionDescription 어노테이션 단 메소드 적용
             if (customExceptionDescription != null) {
                 generateErrorCodeResponseExample(operation, customExceptionDescription.value());
+            }
+            else{
+                generateGlobalErrorResponseExamples(operation);
             }
 
 
@@ -101,5 +105,29 @@ public class SwaggerConfig {
                     apiResponse.setContent(content);
                     responses.addApiResponse(status.toString(), apiResponse);
                 });
+    }
+
+    private void generateGlobalErrorResponseExamples(Operation operation) {
+        ApiResponses responses = operation.getResponses();
+
+        Set<ErrorCode> errorCodeList = Set.of(
+                ILLEGAL_ARGUMENT,
+                API_NOT_FOUND,
+                METHOD_NOT_ALLOWED,
+                INTERNAL_SERVER_ERROR,
+                UNAUTHORIZED,
+                FORBIDDEN
+        );
+
+        Map<Integer, List<ExampleHolder>> statusWithExampleHolders =
+                errorCodeList.stream()
+                        .map(errorCode -> ExampleHolder.builder()
+                                .holder(getSwaggerExample(errorCode))
+                                .code(errorCode.getHttpStatus())
+                                .name(errorCode.toString())
+                                .build())
+                        .collect(groupingBy(ExampleHolder::getCode));
+
+        addExamplesToResponses(responses, statusWithExampleHolders);
     }
 }
