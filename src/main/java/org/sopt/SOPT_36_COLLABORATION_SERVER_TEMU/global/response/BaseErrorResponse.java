@@ -2,7 +2,7 @@ package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.response;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Getter;
-import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.ErrorCode;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.constant.ErrorCode;
 import org.springframework.http.HttpStatusCode;
 
 import java.time.LocalDateTime;

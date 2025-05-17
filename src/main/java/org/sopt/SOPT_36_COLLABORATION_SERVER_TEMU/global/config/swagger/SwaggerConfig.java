@@ -11,7 +11,7 @@ import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.annotation.CustomExceptionDescription;
-import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.ErrorCode;
+import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.exception.constant.ErrorCode;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.global.response.BaseErrorResponse;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
