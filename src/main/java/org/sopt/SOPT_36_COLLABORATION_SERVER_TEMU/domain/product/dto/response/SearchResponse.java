@@ -5,5 +5,5 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 public record SearchResponse(
-        @Schema(description = "검색상품 리스트", example = "") List<ProductMainInfo> searchedProductList) {
+        @Schema(description = "검색상품 리스트", example = "") List<SearchedProductInfo> searchedProductList) {
 }

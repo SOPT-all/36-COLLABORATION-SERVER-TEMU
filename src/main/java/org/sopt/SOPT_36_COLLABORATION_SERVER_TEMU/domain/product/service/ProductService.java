@@ -2,10 +2,6 @@ package org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
-import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.dto.response.*;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.Category;
 import org.sopt.SOPT_36_COLLABORATION_SERVER_TEMU.domain.product.model.Product;
@@ -66,10 +62,10 @@ public class ProductService {
 
     public SearchResponse getSearchedProduct(String keyword){
         List<Product> searchedProducts = productRepository.findByProductNameContaining((keyword));
-        List<ProductMainInfo> productMainInfos = new ArrayList<>();
+        List<SearchedProductInfo> searchedProductInfos = new ArrayList<>();
         for(Product product : searchedProducts){
             Long productId = product.getId();
-            productMainInfos.add(new ProductMainInfo(
+            searchedProductInfos.add(new SearchedProductInfo(
                     productId,
                     product.getProductName(),
                     product.getDiscountRate(),
@@ -79,7 +75,7 @@ public class ProductService {
                     product.getTag()
             ));
         }
-        return new SearchResponse(productMainInfos);
+        return new SearchResponse(searchedProductInfos);
     }
 
     public ProductDetailResponse getProductDetail(Long productId) {
