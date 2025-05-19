@@ -29,9 +29,9 @@ public class Product {
     @Column(nullable = true)
     private ProductTag tag;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 255)
-    private Category category;
+//    @Enumerated(EnumType.STRING)
+//    @Column(nullable = false, length = 255)
+//    private CategoryList category;
 
     @Column(nullable = false)
     private String company;
@@ -47,6 +47,9 @@ public class Product {
 
     @OneToMany(mappedBy = "product", orphanRemoval = true)
     private List<ProductReview> productReviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductCategory> productCategories = new ArrayList<>();
 
     // 연관관계 편의 메서드들
     public void addProductColor(ProductColor color) {
@@ -67,5 +70,23 @@ public class Product {
     public void addProductReview(ProductReview review) {
         productReviews.add(review);
         review.setProduct(this);
+    }
+
+    public void addProductCategory(ProductCategory category) {
+        productCategories.add(category);
+        category.setProduct(this);
+    }
+
+    @PrePersist
+    private void ensureRecommendCategory() {
+        boolean hasRecommend = productCategories.stream()
+                .anyMatch(pc -> pc.getCategoryName() == Category.RECOMMEND);
+        if (!hasRecommend) {
+            ProductCategory recommend = ProductCategory.builder()
+                    .categoryName(Category.RECOMMEND)
+                    .product(this)
+                    .build();
+            productCategories.add(recommend);
+        }
     }
 }
