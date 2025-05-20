@@ -26,30 +26,52 @@ public class ProductService {
     private final ProductReviewRepository productReviewRepository;
     private final ProductCategoryRepository productCategoryRepository;
 
-    public MainResponse getAllProduct(){
+    public MainResponse getAllProduct() {
         List<Product> products = productRepository.findAll();
+
+        Product productWithMultipleImages = null;
+        List<Product> others = new ArrayList<>();
+
+        for (Product product : products) {
+            if (productWithMultipleImages == null && product.getProductImages().size() > 1) {
+                productWithMultipleImages = product;
+            } else {
+                others.add(product);
+            }
+        }
+
+        Collections.shuffle(others);
+
+        List<Product> finalOrderedProducts = new ArrayList<>();
+        if (productWithMultipleImages != null) {
+            finalOrderedProducts.add(productWithMultipleImages); // 이미지를 여러 개 가지는 상품
+        }
+        finalOrderedProducts.addAll(others); // 나머지
+
         List<ProductMainInfo> productMainInfos = new ArrayList<>();
-        for(Product product : products){
+
+        for (Product product : finalOrderedProducts) {
             Long productId = product.getId();
+
             List<ProductCategory> categoryEntities = productCategoryRepository.findAllByProduct_Id(productId);
             List<String> categoryList = categoryEntities.stream()
-                    .map(pc -> pc.getCategoryName().getCategoryName()) // enum 이름만 추출
+                    .map(pc -> pc.getCategoryName().getCategoryName())
                     .toList();
+
+            String imageUrl = productImageRepository.findFirstByProduct_Id(productId).getImageUrl();
+
             productMainInfos.add(new ProductMainInfo(
                     productId,
                     product.getProductName(),
                     product.getDiscountRate(),
                     (int) (product.getOriginalPrice() * (1 - product.getDiscountRate() / 100.0)),
-                    productImageRepository.findFirstByProduct_Id(productId).getImageUrl(),
+                    imageUrl,
                     productReviewRepository.countByProduct_Id(productId),
                     product.getTag(),
                     categoryList
-                    ));
+            ));
         }
-        Collections.shuffle(productMainInfos);
-//        List<String> categoryNames = Arrays.stream(ProductCategory.values())
-//                .map(ProductCategory::getCategoryName)
-//                .toList();
+
         return new MainResponse(productMainInfos);
     }
 

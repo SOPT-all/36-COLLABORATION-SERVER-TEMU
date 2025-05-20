@@ -29,10 +29,6 @@ public class Product {
     @Column(nullable = true)
     private ProductTag tag;
 
-//    @Enumerated(EnumType.STRING)
-//    @Column(nullable = false, length = 255)
-//    private CategoryList category;
-
     @Column(nullable = false)
     private String company;
 
