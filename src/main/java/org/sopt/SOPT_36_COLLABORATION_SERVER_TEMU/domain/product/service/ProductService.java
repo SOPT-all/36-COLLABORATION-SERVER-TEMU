@@ -138,9 +138,9 @@ public class ProductService {
                     review.getPurchaseOption(),
                     review.getCreatedAt()
             ));
-            if(!review.getImageUrl().isEmpty()) {
-                reviewImages.add(review.getImageUrl());
-            }
+            Optional.ofNullable(review.getImageUrl())
+                    .filter(url -> !url.isEmpty())
+                    .ifPresent(reviewImages::add);
         }
         List<Object[]> scoreCountList = productReviewRepository.countReviewGroupByScore(productId);
         int totalReviewCount = reviews.size();
